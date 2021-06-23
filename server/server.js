@@ -1,3 +1,10 @@
+const THIRTY_MINS_API_ID = "price_1J5MCQHGBf1FRE097LLlWLfP"
+const SIXTY_MINS_API_ID = "price_1J5NKmHGBf1FRE09wA4SGg5k"
+var API_ID = THIRTY_MINS_API_ID;
+
+module.exports = {API_ID};
+
+
 const express = require('express');
 const app = express();
 const { resolve } = require('path');
@@ -37,7 +44,7 @@ app.get('/', (req, res) => {
 app.get('/config', async (req, res) => {
   // const price = await stripe.prices.retrieve(process.env.PRICE);
   // TODO Testing
-  const price = await stripe.prices.retrieve("price_1J5NKmHGBf1FRE09wA4SGg5k");
+  const price = await stripe.prices.retrieve(API_ID);
 
 
   res.send({
@@ -71,7 +78,7 @@ app.post('/create-checkout-session', async (req, res) => {
     line_items: [{
       // TODO Testing
       // price: process.env.PRICE,
-      price: "price_1J5NKmHGBf1FRE09wA4SGg5k",
+      price: API_ID,
       quantity: 1,
     }],
     // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
@@ -135,7 +142,7 @@ app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
 function checkEnv() {
   // TODO Testing
   // const price = process.env.PRICE;
-  const price = "price_1J5NKmHGBf1FRE09wA4SGg5k";
+  const price = API_ID;
 
   if(price === "price_12345" || !price) {
     console.log("You must set a Price ID in the environment variables. Please see the README.");
